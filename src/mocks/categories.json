@@ -1,0 +1,16 @@
+{
+    "categories": [
+        {
+            "name": "Books",
+            "description": "boooooooooks"
+        },
+        {
+            "name": "Automotive",
+            "description": "Automotive stuff"
+        },
+        {
+            "name": "Movies",
+            "description": "Some movies"
+        }
+    ]
+}

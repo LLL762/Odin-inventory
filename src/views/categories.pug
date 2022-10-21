@@ -1,0 +1,16 @@
+doctype
+html(lang='en')
+    head
+        meta(charset='utf-8')       
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        title  #{title}
+        link(rel="stylesheet", href="style/categories.css", attr)
+    body
+        main
+            p categories
+            div#categories.box
+                each category in categories
+                    p.category #{category.name}
+
+
+        
