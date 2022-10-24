@@ -1,4 +1,5 @@
 import mongoose, { Schema, model, Types } from "mongoose";
+import { ICategory } from "./category";
 
 interface ICategoryProjection {
   _id: Types.ObjectId;
@@ -19,13 +20,13 @@ const itemSchema = new Schema<IItem>(
   {
     name: { type: String, required: true },
     description: { type: String },
-    categories: [{ type: mongoose.Types.ObjectId, ref: "Category" }],
+    categories: [{ _id: { type: Types.ObjectId }, name: { type: String } }],
     trending: { type: Number, default: 0 },
     price: { type: Number, required: true },
     nbInStock: { type: Number },
     imgUrl: { type: String },
   },
-  { collection: "categories" }
+  { collection: "items" }
 );
 
 export const Item = model<IItem>("Item", itemSchema);

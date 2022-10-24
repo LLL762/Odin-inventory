@@ -1,0 +1,26 @@
+{
+    "items": [
+        {
+            "name": "Fire TV 50",
+            "description": "Fire TV 50 \" 4-Series 4K UHD smart TV with 4-Year Protection Plan",
+            "price": 387.48,
+            "nbInStock": 25,
+            "trending": 4
+        },
+        {
+            "name": "HALLOWEEN: Collector's Edition [4K UHD]",
+            "description": "Donald Pleasence (Actor), Jamie Lee Curtis (Actor), John Carpenter (Director, Writer)",
+            "price": 20.99,
+            "nbInStock": 40,
+            "trending": 75,
+            "imgUrl": "https://m.media-amazon.com/images/I/81TzYGqfJjS._SY445_.jpg",
+            "categories": [
+                {
+                    "_id": "635156c9f1c37274ee51cad3",
+                    "name": "Movies"
+                }
+            ],
+            "genre": "Horror"
+        }
+    ]
+}

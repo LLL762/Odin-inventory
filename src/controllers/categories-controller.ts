@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction, Router } from "express";
+import { Request, Response, Router } from "express";
 import { ICategoryRepo } from "../repo/i-category-repo";
 import { RouterUris } from "../config/router-uri";
 import { IController } from "./i-controller";

@@ -8,6 +8,7 @@ import { ServerConfigs } from "./config/server-config";
 import { MongoDbDatasource } from "./datasource/mongo-datasource";
 import { CategoriesController } from "./controllers/categories-controller";
 import { CategoryRepo } from "./repo/category-repo";
+import { ItemRepo } from "./repo/item-repo";
 
 const app = express();
 const router = express.Router();
@@ -21,7 +22,9 @@ app.use(logger("dev"));
 app.set("view engine", "pug");
 app.set("views", `${__dirname}/views`);
 
-const indexController = new IndexController(router);
+const itemRepo = new ItemRepo();
+
+const indexController = new IndexController(router, itemRepo);
 indexController.init();
 
 const categoryRepo = new CategoryRepo();

@@ -10,3 +10,8 @@ html(lang='en')
     body
         main
             p hello pug
+            div#item.box
+                each item in items
+                    p.item #{item.name}
+                        each category in item.categories
+                            p #{category.name}

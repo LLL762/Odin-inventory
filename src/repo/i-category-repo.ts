@@ -1,4 +1,4 @@
-import { Document, Model, Query, Types } from "mongoose";
+import { Document } from "mongoose";
 import { ICategory } from "../models/category";
 import { QueryResult } from "../types-alias/mongoose-query-result";
 export interface ICategoryRepo {

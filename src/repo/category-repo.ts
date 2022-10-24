@@ -1,4 +1,4 @@
-import { Document, Error } from "mongoose";
+import { Document } from "mongoose";
 import { Category, ICategory } from "../models/category";
 
 import { ICategoryRepo } from "./i-category-repo";
