@@ -6,3 +6,8 @@ export type QueryResult<T> =
         _id: Types.ObjectId;
       })
   | null;
+
+export type Doc<T> = Document<unknown, any, T> &
+  T & {
+    _id: Types.ObjectId;
+  };

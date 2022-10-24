@@ -1,5 +1,6 @@
 import { Document } from "mongoose";
 import { Category, ICategory } from "../models/category";
+import { Doc } from "../types-alias/mongoose-query-result";
 
 import { ICategoryRepo } from "./i-category-repo";
 
@@ -22,7 +23,7 @@ export class CategoryRepo implements ICategoryRepo {
     }
   }
 
-  public async save(category: Document<ICategory>) {
+  public async save(category: Doc<ICategory>) {
     try {
       const result = await category.save();
       return result;

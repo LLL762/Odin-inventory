@@ -1,0 +1,7 @@
+form(action="#{addUri}", method="post") 
+    label(for="name") Name :
+    input(type="text" name="name" value="#{category.name}" id="category-name"  placeholder="enter category name" required min=3 max=4) 
+    label(for="description") Description :
+    textarea(name="description", cols="30", rows="10", required) 
+    button(type="submit") submit
+
