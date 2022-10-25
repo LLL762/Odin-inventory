@@ -21,6 +21,17 @@ export class ItemRepo implements IItemRepo {
     }
   }
 
+  public async findByCategoryId(id: string) {
+    try {
+      const result = await Item.find({
+        categories: { $elemMatch: { _id: id } },
+      }).exec();
+      return result;
+    } catch (err) {
+      return console.log(err);
+    }
+  }
+
   public findByName(name: string) {
     return Item.findOne<IItem>({ name: name });
   }
