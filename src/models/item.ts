@@ -9,7 +9,7 @@ export interface ICategoryProjection {
 export interface IItem {
   name: string;
   description: string;
-  categories: ICategoryProjection[];
+  categories: ICategory[] | null;
   trending?: number;
   price: number;
   nbInStock: number;
@@ -20,7 +20,7 @@ const itemSchema = new Schema<IItem>(
   {
     name: { type: String, required: true },
     description: { type: String },
-    categories: [{ _id: { type: Types.ObjectId }, name: { type: String } }],
+    categories: [{ type: Types.ObjectId, ref: "Category" }],
     trending: { type: Number, default: 0 },
     price: { type: Number, required: true },
     nbInStock: { type: Number },

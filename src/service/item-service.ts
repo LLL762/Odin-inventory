@@ -13,11 +13,7 @@ export class ItemService {
   }
 
   public async getAllCategories() {
-    return await this._categoryRepo.findAll();
-  }
-
-  public async getByCategoryId(id: string) {
-    return await this._categoryRepo.;
+    return this._categoryRepo.findAll();
   }
 
   public async saveItem(body: any) {
@@ -36,7 +32,7 @@ export class ItemService {
 
     const categories = (await this._categoryRepo.findByIdIn(
       categoriesIds
-    )) as ICategoryProjection[];
+    )) as ICategory[];
 
     if (categories.length != categoriesIds.length) {
       return;
