@@ -16,6 +16,10 @@ export class ItemService {
     return await this._categoryRepo.findAll();
   }
 
+  public async getByCategoryId(id: string) {
+    return await this._categoryRepo.;
+  }
+
   public async saveItem(body: any) {
     const categoriesId: any[] | undefined = body?.categories;
 
