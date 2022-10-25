@@ -1,7 +1,7 @@
 import mongoose, { Schema, model, Types } from "mongoose";
 import { ICategory } from "./category";
 
-interface ICategoryProjection {
+export interface ICategoryProjection {
   _id: Types.ObjectId;
   name: string;
 }

@@ -3,12 +3,9 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import http from "http";
-import { IndexController } from "./controllers/index-controller";
 import { ServerConfigs } from "./config/server-config";
 import { MongoDbDatasource } from "./datasource/mongo-datasource";
-import { CategoriesController } from "./controllers/categories-controller";
-import { CategoryRepo } from "./repo/category-repo";
-import { ItemRepo } from "./repo/item-repo";
+
 import { AppContainer } from "./init/app-container";
 
 const app = express();
@@ -27,7 +24,7 @@ const appContainer = new AppContainer(router);
 appContainer.init();
 
 router.get("*", (req, res) => res.status(404).render("404"));
-app.use("/", router);
+app.use("", router);
 
 app.use(
   (

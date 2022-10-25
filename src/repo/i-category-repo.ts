@@ -6,4 +6,6 @@ export interface ICategoryRepo {
   findAll(): Promise<QueryResult<ICategory>[] | void>;
 
   save(category: Doc<ICategory>): Promise<Doc<ICategory> | void>;
+
+  findByIdIn(ids: string[]): Promise<QueryResult<ICategory>[] | void>;
 }

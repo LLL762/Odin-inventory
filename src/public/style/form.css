@@ -1,0 +1,15 @@
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+input,
+select,
+button {
+  max-width: 20em;
+}
+
+textarea {
+  max-width: 40em;
+}

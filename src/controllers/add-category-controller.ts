@@ -15,14 +15,14 @@ export class AddCategoryController implements IController {
   }
 
   private readonly getHandler = async (req: Request, res: Response) => {
-    res.render("add-category", { title: "Express" });
+    res.render("add-category", { title: "Express", addUri: this._baseUrl });
   };
 
   private readonly postHandler = async (req: Request, res: Response) => {
     const body = req.body;
     const category = new Category(body);
 
-    this._categoryRepo.save(category);
+    await this._categoryRepo.save(category);
 
     res.redirect(RouterUris.CATEGORIES);
   };

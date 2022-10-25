@@ -22,11 +22,6 @@ export class IndexController implements Initializable {
   ) => {
     const items = await this._itemRepo.findAll();
 
-    console.log(items);
-
-    console.log((items as IItem[])[0].categories[0]);
-    console.log((items as IItem[])[0].categories[0].name);
-
     res.render("index", { title: "Express", items: items });
   };
 
