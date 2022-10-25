@@ -9,7 +9,7 @@ export interface ICategoryProjection {
 export interface IItem {
   name: string;
   description: string;
-  categories: ICategory[] | null;
+  categories: ICategoryProjection[] | null;
   trending?: number;
   price: number;
   nbInStock: number;

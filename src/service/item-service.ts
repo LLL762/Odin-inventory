@@ -32,7 +32,7 @@ export class ItemService {
 
     const categories = (await this._categoryRepo.findByIdIn(
       categoriesIds
-    )) as ICategory[];
+    )) as ICategoryProjection[];
 
     if (categories.length != categoriesIds.length) {
       return;
