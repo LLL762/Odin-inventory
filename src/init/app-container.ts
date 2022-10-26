@@ -4,6 +4,7 @@ import { AddItemController } from "../controllers/add-item-controlers";
 import { CategoriesController } from "../controllers/categories-controller";
 import { IController } from "../controllers/i-controller";
 import { IndexController } from "../controllers/index-controller";
+import { ItemEditController } from "../controllers/item-edit-controller";
 import { CategoryRepo } from "../repo/category-repo";
 import { ICategoryRepo } from "../repo/i-category-repo";
 import { IItemRepo } from "../repo/i-item-repo";
@@ -28,6 +29,7 @@ export class AppContainer implements Initializable {
       new AddCategoryController(this.router, this.categoryRepo),
       new CategoriesController(this.router, this.categoryRepo),
       new AddItemController(this.router, this.itemService),
+      new ItemEditController(this.router, this.itemService),
     ];
   }
 

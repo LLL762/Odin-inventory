@@ -16,8 +16,7 @@
             "imgUrl": "https://m.media-amazon.com/images/I/81TzYGqfJjS._SY445_.jpg",
             "categories": [
                 {
-                    "_id": "635156c9f1c37274ee51cad3",
-                    "name": "Movies"
+                    "$ref": ""
                 }
             ],
             "genre": "Horror"

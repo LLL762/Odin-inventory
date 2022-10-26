@@ -3,6 +3,17 @@ import { Doc, QueryResult } from "../types-alias/mongoose-query-result";
 import { IItemRepo } from "./i-item-repo";
 
 export class ItemRepo implements IItemRepo {
+  public async findById(id: string): Promise<void | QueryResult<IItem>> {
+    try {
+      const result = await Item.findOne({ id: id })
+        .populate("categories", "name")
+        .exec();
+      return result;
+    } catch (err) {
+      return console.log(err);
+    }
+  }
+
   public async findAll(): Promise<void | QueryResult<IItem>[]> {
     try {
       const result = await Item.find().populate("categories", "name").exec();

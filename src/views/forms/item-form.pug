@@ -2,11 +2,12 @@ form(action="#{addUri}", method="post")
     label(for="name") Name :
     input(value=item.name type="text" name="name"  id="item-name"  placeholder="enter item name" required min=3 max=50) 
     label(for="description") Description :
-    textarea(value="#{item.description}" name="description", cols="30", rows="10", required) 
+    textarea(name="description", cols="30", rows="10", required ) 
+        |#{item.description}  
     label(for="price") Price :
-    input(type="text" name="price" value="#{item.price}" id="item-price"  placeholder="enter item name" required ) 
+    input(type="text" name="price" value=item.price id="item-price"  placeholder="enter item name" required ) 
     label(for="nbInStock") qte :
-    input(type="number" name="nbInStock" value="#{item.nbInStock}" id="item-qte"  placeholder="enter item name" required) 
+    input(type="number" name="nbInStock" value=item.nbInStock id="item-qte"  placeholder="enter item name" required) 
     label(for="imgUrl") img  :
     input(type="text" name="imgUrl" value=item.imgUrl id="item-img"  placeholder="enter item name" required) 
     label(for="categories")  : 

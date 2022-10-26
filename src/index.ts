@@ -7,6 +7,8 @@ import { ServerConfigs } from "./config/server-config";
 import { MongoDbDatasource } from "./datasource/mongo-datasource";
 
 import { AppContainer } from "./init/app-container";
+import { RegexUtilities } from "./utility/regex";
+import { ValidationUtility } from "./validation/validation-utilities";
 
 const app = express();
 const router = express.Router();
