@@ -36,6 +36,7 @@ app.use(
     next: express.NextFunction
   ) => {
     console.error(err.stack);
+
     res.status(500).send("500");
   }
 );

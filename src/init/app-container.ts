@@ -11,6 +11,7 @@ import { IItemRepo } from "../repo/i-item-repo";
 import { ItemRepo } from "../repo/item-repo";
 import { ItemService } from "../service/item-service";
 import { Initializable } from "../utility/Initializable";
+import { CategoryValidator } from "../validation/category-validator";
 
 export class AppContainer implements Initializable {
   private readonly router: Router;
@@ -20,13 +21,18 @@ export class AppContainer implements Initializable {
     this.categoryRepo,
     this.itemRepo
   );
+  private readonly categoryValidator = new CategoryValidator();
   private readonly controllers: IController[];
 
   constructor(router: Router) {
     this.router = router;
     this.controllers = [
       new IndexController(this.router, this.itemRepo),
-      new AddCategoryController(this.router, this.categoryRepo),
+      new AddCategoryController(
+        this.router,
+        this.categoryRepo,
+        this.categoryValidator
+      ),
       new CategoriesController(this.router, this.categoryRepo),
       new AddItemController(this.router, this.itemService),
       new ItemEditController(this.router, this.itemService),
