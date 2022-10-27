@@ -1,14 +1,11 @@
-import express from "express";
-import path from "path";
 import cookieParser from "cookie-parser";
-import logger from "morgan";
+import express from "express";
 import http from "http";
+import logger from "morgan";
+import path from "path";
 import { ServerConfigs } from "./config/server-config";
 import { MongoDbDatasource } from "./datasource/mongo-datasource";
-
 import { AppContainer } from "./init/app-container";
-import { RegexUtilities } from "./utility/regex";
-import { ValidationUtility } from "./validation/validation-utilities";
 
 const app = express();
 const router = express.Router();

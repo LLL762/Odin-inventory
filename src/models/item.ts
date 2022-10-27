@@ -1,7 +1,6 @@
-import mongoose, { Schema, model, Types } from "mongoose";
+import { model, Schema, Types } from "mongoose";
 import { RegexUtilities } from "../utility/regex";
 import { ValidationUtility } from "../validation/validation-utilities";
-import { ICategory } from "./category";
 
 export interface ICategoryProjection {
   _id: Types.ObjectId;

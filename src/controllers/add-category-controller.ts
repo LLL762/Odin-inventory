@@ -3,7 +3,7 @@ import { RouterUris } from "../config/router-uri";
 import { Category, ICategory } from "../models/category";
 import { ICategoryRepo } from "../repo/i-category-repo";
 import { IController } from "./i-controller";
-import { body, validationResult } from "express-validator";
+import { validationResult } from "express-validator";
 import { CategoryValidator } from "../validation/category-validator";
 
 export class AddCategoryController implements IController {
@@ -56,7 +56,7 @@ export class AddCategoryController implements IController {
 
     console.log(category);
 
-    /*   await this._categoryRepo.save(category); */
+    await this._categoryRepo.save(category);
 
     res.redirect(RouterUris.CATEGORIES);
   };

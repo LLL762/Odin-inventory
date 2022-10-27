@@ -1,4 +1,4 @@
-import { Router, Application, application } from "express";
+import { Router } from "express";
 import { AddCategoryController } from "../controllers/add-category-controller";
 import { AddItemController } from "../controllers/add-item-controlers";
 import { CategoriesController } from "../controllers/categories-controller";

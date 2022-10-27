@@ -61,7 +61,7 @@ export class AddItemController implements IController {
       return;
     }
 
-    /*  await this._itemService.saveItem(body); */
+    await this._itemService.saveItem(body);
     console.log(item);
 
     res.redirect(RouterUris.INDEX);
