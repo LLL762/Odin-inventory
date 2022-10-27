@@ -6,11 +6,25 @@ import path from "path";
 import { ServerConfigs } from "./config/server-config";
 import { MongoDbDatasource } from "./datasource/mongo-datasource";
 import { AppContainer } from "./init/app-container";
+import session from "express-session";
+import passport from "passport";
+import { PassPortConfigs } from "./config/passport-config";
 
 const app = express();
 const router = express.Router();
 
 app.use(express.json());
+
+app.use(
+  session({
+    secret: PassPortConfigs.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));

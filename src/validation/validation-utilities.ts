@@ -1,3 +1,5 @@
+import validator from "validator";
+
 export class ValidationUtility {
   public static readonly isInteger = (nb: number) => Number.isInteger(nb);
 
@@ -8,4 +10,13 @@ export class ValidationUtility {
     return (nb: number) =>
       ValidationUtility.getDecimalPart(nb).length <= maxDecimal;
   };
+
+  public static readonly isStrongPassword = (value: string) =>
+    validator.isStrongPassword(value, {
+      minLength: 10,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1,
+    });
 }
