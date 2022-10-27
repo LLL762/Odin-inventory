@@ -9,7 +9,7 @@ form(action="#{addUri}", method="post")
     label(for="nbInStock") qte :
     input(type="number" name="nbInStock" value=item.nbInStock id="item-qte"  placeholder="enter item name" required) 
     label(for="imgUrl") img  :
-    input(type="text" name="imgUrl" value=item.imgUrl id="item-img"  placeholder="enter item name" required) 
+    input(type="text" name="imgUrl" value=item.imgUrl id="item-img"  placeholder="enter item name") 
     label(for="categories")  : 
     select(name="categories" required)
         each category in categories

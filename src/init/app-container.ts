@@ -12,6 +12,7 @@ import { ItemRepo } from "../repo/item-repo";
 import { ItemService } from "../service/item-service";
 import { Initializable } from "../utility/Initializable";
 import { CategoryValidator } from "../validation/category-validator";
+import { ItemValidator } from "../validation/item-validator";
 
 export class AppContainer implements Initializable {
   private readonly router: Router;
@@ -22,6 +23,8 @@ export class AppContainer implements Initializable {
     this.itemRepo
   );
   private readonly categoryValidator = new CategoryValidator();
+  private readonly itemValidator = new ItemValidator();
+
   private readonly controllers: IController[];
 
   constructor(router: Router) {
@@ -34,7 +37,7 @@ export class AppContainer implements Initializable {
         this.categoryValidator
       ),
       new CategoriesController(this.router, this.categoryRepo),
-      new AddItemController(this.router, this.itemService),
+      new AddItemController(this.router, this.itemService, this.itemValidator),
       new ItemEditController(this.router, this.itemService),
     ];
   }
