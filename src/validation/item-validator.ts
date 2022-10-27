@@ -1,4 +1,5 @@
 import { body, check, oneOf } from "express-validator";
+import { isValidObjectId } from "mongoose";
 import { ValidationUtility } from "./validation-utilities";
 
 export class ItemValidator {
@@ -36,17 +37,10 @@ export class ItemValidator {
       .withMessage("request body should not contain an trending field");
 
   public categoriesHaveValidIds = () =>
-    oneOf([
-      check("categories.*")
-        .trim()
-        .isMongoId()
-        .withMessage("Categories must be valid a Mongo id or none"),
-
-      check("categories.*")
-        .trim()
-        .custom((value) => value == "none")
-        .withMessage("Categories must be valid a Mongo id or none"),
-    ]);
+    check("categories.*")
+      .trim()
+      .custom((value) => value === "none" || isValidObjectId(value))
+      .withMessage("Categories must be valid a Mongo id or none");
 
   public validatePrice = () =>
     body("price")
