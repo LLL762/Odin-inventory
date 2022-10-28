@@ -1,5 +1,5 @@
-import { Category, ICategory } from "../models/category";
-import { ICategoryProjection, IItem, Item } from "../models/item";
+import { RefDocsDoNotExistError } from "../errors/ref-doc-error";
+import { ICategoryProjection, Item } from "../models/item";
 import { ICategoryRepo } from "../repo/i-category-repo";
 import { IItemRepo } from "../repo/i-item-repo";
 
@@ -21,30 +21,25 @@ export class ItemService {
   }
 
   public async saveItem(body: any) {
-    const categoriesId: any[] | undefined = body?.categories;
+    const itemCategoriesIds: string[] | undefined = body?.categories;
 
-    if (categoriesId === undefined) {
-      return;
+    if (itemCategoriesIds === undefined) {
+      throw new RefDocsDoNotExistError("must provide at least a category");
     }
 
-    delete body["categoriesId"];
-
-    const categoriesIds = categoriesId
+    const categoriesIds = itemCategoriesIds
       .filter((id) => id != "none")
-      .map((id) => id.trim())
-      .filter((id) => id.match(/^[0-9a-fA-F]{24}$/));
-
+      .map((id) => id.trim());
     const categories = (await this._categoryRepo.findByIdIn(
       categoriesIds
     )) as ICategoryProjection[];
 
     if (categories.length != categoriesIds.length) {
-      return;
+      throw new RefDocsDoNotExistError("categories ids are not referenced");
     }
 
-    const itemToSave = new Item(body);
-    itemToSave.categories = categories;
-
-    return this._itemRepo.save(itemToSave);
+    const item = new Item(body);
+    item.categories = categories;
+    return this._itemRepo.save(item);
   }
 }

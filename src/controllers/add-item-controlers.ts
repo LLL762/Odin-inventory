@@ -1,10 +1,9 @@
-import { Request, Response, Router } from "express";
+import { NextFunction, Request, Response, Router } from "express";
 import { validationResult } from "express-validator";
 import { RouterUris } from "../config/router-uri";
+import { RefDocsDoNotExistError } from "../errors/ref-doc-error";
 import { ICategory } from "../models/category";
-import { ICategoryProjection, IItem, Item } from "../models/item";
-import { ICategoryRepo } from "../repo/i-category-repo";
-import { IItemRepo } from "../repo/i-item-repo";
+import { IItem, Item } from "../models/item";
 import { ItemService } from "../service/item-service";
 import { QueryResult } from "../types-alias/mongoose-query-result";
 import { ItemValidator } from "../validation/item-validator";
@@ -40,29 +39,43 @@ export class AddItemController implements IController {
     });
   }
 
-  private readonly getHandler = async (req: Request, res: Response) => {
+  private readonly getHandler = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     const categories = await this._itemService.getAllCategories();
 
     this.renderView(res, categories, new Item());
   };
 
-  private readonly postHandler = async (req: Request, res: Response) => {
+  private readonly postHandler = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     const body = req.body;
     const errors = validationResult(req);
-    const item = new Item(body);
 
-    console.log(body);
     console.log(errors);
-    console.log(body.categories);
 
     if (!errors.isEmpty()) {
       const categories = await this._itemService.getAllCategories();
-      this.renderView(res, categories, item, 400);
+      this.renderView(res, categories, body, 400);
       return;
     }
 
-    await this._itemService.saveItem(body);
-    console.log(item);
+    try {
+      await this._itemService.saveItem(body);
+    } catch (err) {
+      console.log(err);
+
+      if (err instanceof RefDocsDoNotExistError) {
+        const categories = await this._itemService.getAllCategories();
+        this.renderView(res, categories, body, 400);
+        return;
+      }
+    }
 
     res.redirect(RouterUris.INDEX);
   };
