@@ -24,16 +24,6 @@ export class IndexController implements Initializable {
     const items = (await this._itemRepo.findAll()) as IItem[];
     const jitems = JSON.parse(JSON.stringify(items));
 
-    console.log(jitems);
-    console.log(items[0].categories?.at(0));
-
-    console.log(jitems[0].categories[0].name);
-    const cats = items[0].categories;
-    console.log("ln ", cats?.length);
-    const cat = cats?.at(0);
-    //const result = cat?.name ? cat["name"] : "";
-    //console.log(cat?["name"]);
-
     res.render("index", { title: "Express", items: items });
   };
 
