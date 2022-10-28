@@ -11,7 +11,7 @@ export interface IAppUser {
 }
 
 export class AppUserInfos {
-  private static readonly _BLACK_LIST_CHARACTERS = ["$", "@", "%", "{", "}"];
+  private static readonly _BLACK_LIST_CHARACTERS = ["$", "#", "@", "%", "{", "}"];
 
   public static get BLACK_LIST_CHARACTERS(): string[] {
     return JSON.parse(JSON.stringify(AppUserInfos._BLACK_LIST_CHARACTERS));
@@ -28,12 +28,11 @@ const appUserSchema = new Schema<IAppUser>(
       minlength: [5, "name : min 5 characters"],
       validate: {
         validator: (value: string) =>
-          AppUserInfos.BLACK_LIST_CHARACTERS.some((string) =>
+          !AppUserInfos.BLACK_LIST_CHARACTERS.some((string) =>
             value.includes(string)
           ),
-        message: () => "pasword is not strong enough",
+        message: () => `name : characters ${AppUserInfos.BLACK_LIST_CHARACTERS} are forbidden`,
       },
-
       unique: true,
     },
     password: {
@@ -43,26 +42,27 @@ const appUserSchema = new Schema<IAppUser>(
       maxlength: [255, "password : max 255 characters"],
       validate: {
         validator: (value: string) => ValidationUtility.isStrongPassword(value),
-        message: () => "pasword is not strong enough",
+        message: () => "password is not strong enough",
+      }
+    },
+    email: {
+      type: String,
+      required: [true, "email : email is required"],
+      trim: true,
+      maxlength: [255, "email: max 255 characters"],
+      validate: {
+        validator: (value: string) => validator.isEmail(value),
+        message: () => "email : not a valid email address",
       },
-      email: {
-        type: String,
-        required: [true, "email : email is required"],
-        trim: true,
-        maxlength: [255, "email: max 255 characters"],
-        unique: true,
-        validate: {
-          validator: (value: string) => validator.isEmail(value),
-          message: () => "password is not strong enough",
-        },
-      },
-      roles: {
-        type: [{ type: Types.ObjectId, ref: "Role" }],
-      },
+      unique: true
+    },
+    roles: {
+      type: [{ type: Types.ObjectId, ref: "Role" }],
     },
   },
   { collection: "appUsers" }
 );
+
 
 export const AppUser = model<IAppUser>("AppUser", appUserSchema);
 

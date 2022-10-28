@@ -1,8 +1,9 @@
 import { AppUser, IAppUser } from "../models/app-user";
-import { QueryResult } from "../types-alias/mongoose-query-result";
+import { Doc, QueryResult } from "../types-alias/mongoose-query-result";
 import { IAppUserRepo } from "./i-user-repo";
 
 export class AppUserRepo implements IAppUserRepo {
+
   public async findByUsername(
     username: string
   ): Promise<void | QueryResult<IAppUser>> {
@@ -26,4 +27,15 @@ export class AppUserRepo implements IAppUserRepo {
       return console.log(err);
     }
   }
+
+
+  public async save(user: Doc<IAppUser>): Promise<void | Doc<IAppUser>> {
+    try {
+      return await user.save();
+    } catch (err) {
+      return console.log(err);
+    }
+  }
+
+
 }

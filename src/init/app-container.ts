@@ -17,6 +17,7 @@ import { UserService } from "../service/user-service";
 import { Initializable } from "../utility/Initializable";
 import { CategoryValidator } from "../validation/category-validator";
 import { ItemValidator } from "../validation/item-validator";
+import { AppUserValidator } from "../validation/user-validator";
 
 export class AppContainer implements Initializable {
   private readonly router: Router;
@@ -31,6 +32,7 @@ export class AppContainer implements Initializable {
   private readonly userService: UserService = new UserService(this.userRepo);
   private readonly categoryValidator = new CategoryValidator();
   private readonly itemValidator = new ItemValidator();
+  private readonly userValidator = new AppUserValidator();
 
   private readonly controllers: IController[];
 
@@ -46,7 +48,7 @@ export class AppContainer implements Initializable {
       new CategoriesController(this.router, this.categoryRepo),
       new AddItemController(this.router, this.itemService, this.itemValidator),
       new ItemEditController(this.router, this.itemService),
-      new SignUpController(this.router, this.userService),
+      new SignUpController(this.router, this.userService, this.userValidator),
     ];
   }
 
