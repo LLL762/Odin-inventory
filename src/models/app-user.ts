@@ -10,6 +10,14 @@ export interface IAppUser {
   roles: IRole[];
 }
 
+export class AppUserInfos {
+  private static readonly _BLACK_LIST_CHARACTERS = ["$", "@", "%", "{", "}"];
+
+  public static get BLACK_LIST_CHARACTERS(): string[] {
+    return JSON.parse(JSON.stringify(AppUserInfos._BLACK_LIST_CHARACTERS));
+  }
+}
+
 const appUserSchema = new Schema<IAppUser>(
   {
     username: {
@@ -18,6 +26,14 @@ const appUserSchema = new Schema<IAppUser>(
       trim: true,
       maxlength: [255, "name : max 255 characters"],
       minlength: [5, "name : min 5 characters"],
+      validate: {
+        validator: (value: string) =>
+          AppUserInfos.BLACK_LIST_CHARACTERS.some((string) =>
+            value.includes(string)
+          ),
+        message: () => "pasword is not strong enough",
+      },
+
       unique: true,
     },
     password: {
@@ -48,7 +64,7 @@ const appUserSchema = new Schema<IAppUser>(
   { collection: "appUsers" }
 );
 
-export const AppUser = model<IAppUser>("Item", appUserSchema);
+export const AppUser = model<IAppUser>("AppUser", appUserSchema);
 
 appUserSchema.pre("save", function (next) {
   //hash password

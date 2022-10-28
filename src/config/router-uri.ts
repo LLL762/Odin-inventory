@@ -5,4 +5,6 @@ export enum RouterUris {
   CATEGORY_ADD = "/categories/add",
   ITEM_ADD = "/items/add",
   ITEM_EDIT = "/items/:id/edit",
+  SIGN_UP = "/sign-up",
+  LOG_IN = "/login",
 }

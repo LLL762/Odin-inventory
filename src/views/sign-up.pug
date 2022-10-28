@@ -1,0 +1,9 @@
+form(action="#{signUp}", method="post") 
+    label(for="username") username :
+    input(value=user.username type="text" name="username"  id="user-username"  placeholder="enter your username" required min=5 max=255)  
+    label(for="password") password :
+    input(type="password" name="password" id="user-password" required ) 
+    label(for="confirmPassword") confirm password :
+    input(type="password" name="confirmPassword"  id="user-confirm-password" required) 
+    label(for="email") img  :
+    input(type="email" name="email" user.email id="user-email"  placeholder="enter item name") 
