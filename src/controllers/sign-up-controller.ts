@@ -53,7 +53,9 @@ export class SignUpController implements IController {
       return;
     }
 
-    await this.userService.createUser(body);
+    const thing = await this.userService.createUser(body);
+
+    console.log(thing);
 
     res.redirect(RouterUris.INDEX);
   };

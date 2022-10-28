@@ -5,4 +5,5 @@ export interface IAppUserRepo {
   findByUsername(username: string): Promise<QueryResult<IAppUser> | void>;
   findByEmail(email: string): Promise<QueryResult<IAppUser> | void>;
   save(user: Doc<IAppUser>): Promise<void | Doc<IAppUser>>
+  usernameOrMailExists(username: string, email: string): Promise<QueryResult<IAppUser>[] | void>
 }

@@ -11,9 +11,29 @@ export class UserService {
   }
 
   public async createUser(body: any) {
-    return await this.userRepo.save(new AppUser(body));
-  }
 
+    const userToSave = new AppUser(body);
+    const conflictingUsers = await this.userRepo
+      .usernameOrMailExists(userToSave.username, userToSave.email) as IAppUser[];
+
+    switch (conflictingUsers.length) {
+      case 0:
+        return await this.userRepo.save(userToSave);
+      case 1:
+        const conflictingUser = conflictingUsers[0];
+
+        if (conflictingUser.username == userToSave.username) {
+          return conflictingUser.email == userToSave.email ?
+            "username and email already taken" : "username already taken";
+        }
+
+        return "email already taken";
+      case 2:
+        return "username and email already taken";
+      default:
+        throw new Error();
+    }
+  }
 
   public async findByUsernameOrEmail(usernameOrEmail: string) {
     return validator.isEmail(usernameOrEmail) ?

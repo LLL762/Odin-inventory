@@ -1,4 +1,5 @@
 import { AppUser, IAppUser } from "../models/app-user";
+import { UserService } from "../service/user-service";
 import { Doc, QueryResult } from "../types-alias/mongoose-query-result";
 import { IAppUserRepo } from "./i-user-repo";
 
@@ -32,6 +33,16 @@ export class AppUserRepo implements IAppUserRepo {
   public async save(user: Doc<IAppUser>): Promise<void | Doc<IAppUser>> {
     try {
       return await user.save();
+    } catch (err) {
+      return console.log(err);
+    }
+  }
+
+  public async usernameOrMailExists(username: string, email: string) {
+    try {
+      return await AppUser.find(
+        { $or: [{ email: email }, { username: username }] }, 'username email')
+        .limit(2);
     } catch (err) {
       return console.log(err);
     }
