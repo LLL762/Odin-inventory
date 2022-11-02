@@ -9,7 +9,6 @@ import { AppContainer } from "./init/app-container";
 import session from "express-session";
 import passport from "passport";
 import { PassPortConfigs } from "./config/passport-config";
-import { AuthFilter } from "./auth/authenticate";
 
 const app = express();
 const router = express.Router();

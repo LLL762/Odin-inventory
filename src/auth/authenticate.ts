@@ -43,6 +43,7 @@ export class AuthFilter implements Initializable {
     passport.deserializeUser(async (id: string, done) => {
       try {
         const user: any = await this.userService.findUserById(id);
+        user.password = "?";
         done(null, user);
       } catch (err) {
         console.log(err);

@@ -7,4 +7,5 @@ export enum RouterUris {
   ITEM_EDIT = "/items/:id/edit",
   SIGN_UP = "/sign-up",
   LOG_IN = "/login",
+  LOG_OUT = "/logout",
 }

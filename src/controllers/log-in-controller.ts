@@ -1,4 +1,4 @@
-import { Request, Response, Router } from "express";
+import { NextFunction, Request, Response, Router } from "express";
 import { RouterUris } from "../config/router-uri";
 import { IController } from "./i-controller";
 import passport from "passport";
@@ -19,10 +19,20 @@ export class LogInController implements IController {
     });
   }
 
-  private readonly getHandler = async (req: Request, res: Response) => {
-    const t: any = req.session;
+  private readonly logOut = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    req.logout((err) => (err ? next(err) : res.redirect(RouterUris.INDEX)));
+  };
 
-    this.renderView(res, t?.messages);
+  private readonly getHandler = async (req: Request, res: Response) => {
+    const session: any = req.session;
+
+    req.isAuthenticated()
+      ? res.redirect(RouterUris.INDEX)
+      : this.renderView(res, session?.messages);
   };
 
   init(): void {
@@ -35,5 +45,6 @@ export class LogInController implements IController {
         failureMessage: true,
       })
     );
+    this.router.delete(RouterUris.LOG_OUT, this.logOut);
   }
 }

@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction, Router } from "express";
 import { RouterUris } from "../config/router-uri";
+import { IAppUser } from "../models/app-user";
 import { ICategory } from "../models/category";
 import { ICategoryProjection, IItem } from "../models/item";
 import { IItemRepo } from "../repo/i-item-repo";
@@ -16,15 +17,20 @@ export class IndexController implements Initializable {
     this._itemRepo = _itemRepo;
   }
 
+  private renderView(res: Response, items: IItem[], user?: any) {
+    res.render("index", { title: "Express", items: items, user: user });
+  }
+
   private readonly getHandler = async (
     req: Request,
     res: Response,
     next: NextFunction
   ) => {
     const items = (await this._itemRepo.findAll()) as IItem[];
-    const jitems = JSON.parse(JSON.stringify(items));
 
-    res.render("index", { title: "Express", items: items });
+    console.log(req.user);
+
+    this.renderView(res, items, req.user);
   };
 
   public init(): void {
