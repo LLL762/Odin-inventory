@@ -1,0 +1,14 @@
+html(lang='en')
+    head
+        meta(charset='utf-8')       
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        title  #{title}
+        link(rel="stylesheet", href="/style/form.css", attr)
+    body
+        main
+            form(action="#{signUp}", method="post") 
+                label(for="usernameOrEmail") username :
+                input(value=user.username type="text" name="usernameOrEmail"  id="username-or-email"  placeholder="enter your username or email" required min=5 max=255)  
+                label(for="password") password :
+                input(type="password" name="password" id="user-password" required ) 
+                button(type="submit") submit 

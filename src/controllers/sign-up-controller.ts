@@ -1,4 +1,3 @@
-import { log } from "console";
 import { Request, Response, Router } from "express";
 import { validationResult } from "express-validator";
 import { RouterUris } from "../config/router-uri";
@@ -16,23 +15,18 @@ export class SignUpController implements IController {
   constructor(
     router: Router,
     userService: UserService,
-    userValidator: AppUserValidator,
-
+    userValidator: AppUserValidator
   ) {
-    this.router = router
-    this.userService = userService
-    this.userValidator = userValidator
+    this.router = router;
+    this.userService = userService;
+    this.userValidator = userValidator;
   }
 
-  private renderView(
-    res: Response,
-    user?: IAppUser,
-    status?: number
-  ) {
+  private renderView(res: Response, user?: IAppUser, status?: number) {
     res.status(status ?? 200).render("sign-up", {
       title: "Express",
       signUp: this.baseUrl,
-      user: user
+      user: user,
     });
   }
 
@@ -45,8 +39,6 @@ export class SignUpController implements IController {
     const errors = validationResult(req);
 
     console.log(errors);
-
-
 
     if (!errors.isEmpty()) {
       this.renderView(res, body, 400);
@@ -62,12 +54,14 @@ export class SignUpController implements IController {
 
   init(): void {
     this.router.get(this.baseUrl, this.getHandler);
-    this.router.post(this.baseUrl,
+    this.router.post(
+      this.baseUrl,
       this.userValidator.doNotHaveId(),
       this.userValidator.doNotHaveRoles(),
       this.userValidator.validateEmail(),
       this.userValidator.validatePassword(),
       this.userValidator.validateUsername(),
-      this.postHandler);
+      this.postHandler
+    );
   }
 }

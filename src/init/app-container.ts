@@ -21,6 +21,7 @@ import { AppUserValidator } from "../validation/user-validator";
 
 export class AppContainer implements Initializable {
   private readonly router: Router;
+
   private readonly categoryRepo: ICategoryRepo = new CategoryRepo();
   private readonly itemRepo: IItemRepo = new ItemRepo();
   private readonly userRepo: IAppUserRepo = new AppUserRepo();

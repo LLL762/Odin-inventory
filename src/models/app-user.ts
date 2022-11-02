@@ -2,6 +2,8 @@ import { model, Schema, Types } from "mongoose";
 import { ValidationUtility } from "../validation/validation-utilities";
 import validator from "validator";
 import { IRole } from "./role";
+import bcrypt from "bcryptjs";
+import { AuthConfig } from "../config/authConfig";
 
 export interface IAppUser {
   username: string;
@@ -11,7 +13,14 @@ export interface IAppUser {
 }
 
 export class AppUserInfos {
-  private static readonly _BLACK_LIST_CHARACTERS = ["$", "#", "@", "%", "{", "}"];
+  private static readonly _BLACK_LIST_CHARACTERS = [
+    "$",
+    "#",
+    "@",
+    "%",
+    "{",
+    "}",
+  ];
 
   public static get BLACK_LIST_CHARACTERS(): string[] {
     return JSON.parse(JSON.stringify(AppUserInfos._BLACK_LIST_CHARACTERS));
@@ -31,7 +40,8 @@ const appUserSchema = new Schema<IAppUser>(
           !AppUserInfos.BLACK_LIST_CHARACTERS.some((string) =>
             value.includes(string)
           ),
-        message: () => `name : characters ${AppUserInfos.BLACK_LIST_CHARACTERS} are forbidden`,
+        message: () =>
+          `name : characters ${AppUserInfos.BLACK_LIST_CHARACTERS} are forbidden`,
       },
       unique: true,
     },
@@ -43,7 +53,7 @@ const appUserSchema = new Schema<IAppUser>(
       validate: {
         validator: (value: string) => ValidationUtility.isStrongPassword(value),
         message: () => "password is not strong enough",
-      }
+      },
     },
     email: {
       type: String,
@@ -54,7 +64,7 @@ const appUserSchema = new Schema<IAppUser>(
         validator: (value: string) => validator.isEmail(value),
         message: () => "email : not a valid email address",
       },
-      unique: true
+      unique: true,
     },
     roles: {
       type: [{ type: Types.ObjectId, ref: "Role" }],
@@ -63,9 +73,20 @@ const appUserSchema = new Schema<IAppUser>(
   { collection: "appUsers" }
 );
 
+appUserSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    return next();
+  }
+
+  try {
+    this.password = await bcrypt.hash(
+      this.password,
+      AuthConfig.ENCODER_SALT_LENGTH
+    );
+  } catch (err) {
+    console.log(err);
+  }
+  next();
+});
 
 export const AppUser = model<IAppUser>("AppUser", appUserSchema);
-
-appUserSchema.pre("save", function (next) {
-  //hash password
-});
