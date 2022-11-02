@@ -1,3 +1,5 @@
+import * as dotenv from "dotenv";
+dotenv.config();
 import cookieParser from "cookie-parser";
 import express from "express";
 import http from "http";
@@ -8,7 +10,6 @@ import { MongoDbDatasource } from "./datasource/mongo-datasource";
 import { AppContainer } from "./init/app-container";
 import session from "express-session";
 import passport from "passport";
-import { PassPortConfigs } from "./config/passport-config";
 import { RouterUris } from "./config/router-uri";
 
 const app = express();
@@ -17,9 +18,13 @@ const routeWhiteList: string[] = [RouterUris.INDEX, RouterUris.LOG_IN];
 
 app.use(express.json());
 
+if (!process.env.PASSPORT_SESSION_SECRET) {
+  throw new Error("A session secret is required");
+}
+
 app.use(
   session({
-    secret: PassPortConfigs.SESSION_SECRET,
+    secret: process.env.PASSPORT_SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
   })

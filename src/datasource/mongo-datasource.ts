@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { DataSourceConfigs } from "../config/data-source-configs";
 import { Datasource } from "./idatasource";
 
 export class MongoDbDatasource implements Datasource {
@@ -8,10 +7,16 @@ export class MongoDbDatasource implements Datasource {
   }
 
   public connect(): void {
-    mongoose.connect(DataSourceConfigs.URL, {
-      user: DataSourceConfigs.USER,
-      pass: DataSourceConfigs.PASSWORD,
-      dbName: DataSourceConfigs.DB_NAME,
-    });
+    const url = process.env.DATASOURCE_URL;
+
+    if (url) {
+      mongoose.connect(url, {
+        user: process.env.DATASOURCE_USER,
+        pass: process.env.DATASOURCE_PASSWORD,
+        dbName: process.env.DATASOURCE_DB_NAME,
+      });
+    } else {
+      throw new Error("Datasource url not specified");
+    }
   }
 }
