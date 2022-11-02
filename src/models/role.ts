@@ -1,4 +1,4 @@
-import { Schema, Types } from "mongoose";
+import { model, Schema, Types } from "mongoose";
 
 export interface IRole {
   _id: Types.ObjectId;
@@ -6,7 +6,7 @@ export interface IRole {
   acessLevel: number;
 }
 
-const RoleSchema = new Schema<IRole>(
+const roleSchema = new Schema<IRole>(
   {
     name: {
       type: String,
@@ -24,3 +24,5 @@ const RoleSchema = new Schema<IRole>(
   },
   { collection: "appRoles" }
 );
+
+export const Role = model<IRole>("Role", roleSchema);

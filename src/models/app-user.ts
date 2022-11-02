@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import { AuthConfig } from "../config/authConfig";
 
 export interface IAppUser {
+  _id: Types.ObjectId;
   username: string;
   password: string;
   email: string;

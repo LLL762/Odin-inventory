@@ -7,8 +7,9 @@ html(lang='en')
     body
         main
             form(action="#{signUp}", method="post") 
-                label(for="usernameOrEmail") username :
-                input(value=user.username type="text" name="usernameOrEmail"  id="username-or-email"  placeholder="enter your username or email" required min=5 max=255)  
+                label(for="username") username :
+                input(type="text" name="username"  id="username-or-email"  placeholder="enter your username or email" required min=5 max=255)  
                 label(for="password") password :
                 input(type="password" name="password" id="user-password" required ) 
                 button(type="submit") submit 
+            p #{message}

@@ -1,10 +1,12 @@
 import { Router } from "express";
+import { AuthFilter } from "../auth/authenticate";
 import { AddCategoryController } from "../controllers/add-category-controller";
 import { AddItemController } from "../controllers/add-item-controlers";
 import { CategoriesController } from "../controllers/categories-controller";
 import { IController } from "../controllers/i-controller";
 import { IndexController } from "../controllers/index-controller";
 import { ItemEditController } from "../controllers/item-edit-controller";
+import { LogInController } from "../controllers/log-in-controller";
 import { SignUpController } from "../controllers/sign-up-controller";
 import { CategoryRepo } from "../repo/category-repo";
 import { ICategoryRepo } from "../repo/i-category-repo";
@@ -35,6 +37,8 @@ export class AppContainer implements Initializable {
   private readonly itemValidator = new ItemValidator();
   private readonly userValidator = new AppUserValidator();
 
+  private readonly authFilter = new AuthFilter(this.userService);
+
   private readonly controllers: IController[];
 
   constructor(router: Router) {
@@ -50,10 +54,12 @@ export class AppContainer implements Initializable {
       new AddItemController(this.router, this.itemService, this.itemValidator),
       new ItemEditController(this.router, this.itemService),
       new SignUpController(this.router, this.userService, this.userValidator),
+      new LogInController(this.router),
     ];
   }
 
   init(): void {
+    this.authFilter.init();
     for (let controller of this.controllers) {
       controller.init();
     }

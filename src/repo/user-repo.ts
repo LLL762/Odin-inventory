@@ -3,13 +3,20 @@ import { Doc, QueryResult } from "../types-alias/mongoose-query-result";
 import { IAppUserRepo } from "./i-user-repo";
 
 export class AppUserRepo implements IAppUserRepo {
+  public async findById(id: string): Promise<void | QueryResult<IAppUser>> {
+    try {
+      const result = await AppUser.findOne({ id: id }).exec();
+      return result;
+    } catch (err) {
+      return console.log(err);
+    }
+  }
+
   public async findByUsername(
     username: string
   ): Promise<void | QueryResult<IAppUser>> {
     try {
-      return await AppUser.findOne({ username: username })
-        .populate("roles", "name")
-        .exec();
+      return await AppUser.findOne({ username: username }).exec();
     } catch (err) {
       return console.log(err);
     }
