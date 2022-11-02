@@ -9,9 +9,11 @@ import { AppContainer } from "./init/app-container";
 import session from "express-session";
 import passport from "passport";
 import { PassPortConfigs } from "./config/passport-config";
+import { RouterUris } from "./config/router-uri";
 
 const app = express();
 const router = express.Router();
+const routeWhiteList: string[] = [RouterUris.INDEX, RouterUris.LOG_IN];
 
 app.use(express.json());
 
@@ -32,6 +34,14 @@ app.use(logger("dev"));
 
 app.set("view engine", "pug");
 app.set("views", `${__dirname}/views`);
+
+app.all("*", function (req, res, next) {
+  if (!req.user && !routeWhiteList.includes(req.url)) {
+    res.redirect(RouterUris.LOG_IN);
+  } else {
+    next();
+  }
+});
 
 const appContainer = new AppContainer(router);
 appContainer.init();
